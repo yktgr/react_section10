@@ -7,9 +7,16 @@ import rootReducer from "./reducers";
 const store = createStore(rootReducer);
 
 console.log(store.getState());
+
 render(
   <Provider store={store}>
     <App />
   </Provider>,
   document.getElementById("root")
 );
+
+import giphyAPI from "./APIs/giphyAPIs";
+
+giphyAPI("cat").then((res) => {
+  console.log(res.data);
+});
