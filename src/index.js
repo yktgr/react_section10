@@ -1,12 +1,14 @@
 import React from "react";
 import { render } from "react-dom";
 import App from "./App";
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
 import { Provider } from "react-redux";
 import rootReducer from "./reducers";
-const store = createStore(rootReducer);
+import getUrls from "./actions/getUrls";
 
-console.log(store.getState());
+const Middlewares = [thunk];
+const store = createStore(rootReducer, applyMiddleware(...Middlewares));
 
 render(
   <Provider store={store}>
@@ -15,8 +17,4 @@ render(
   document.getElementById("root")
 );
 
-import giphyAPI from "./APIs/giphyAPIs";
-
-giphyAPI("cat").then((res) => {
-  console.log(res.data);
-});
+store.dispatch(getUrls("cat"));
